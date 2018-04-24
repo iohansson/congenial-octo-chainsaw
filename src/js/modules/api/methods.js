@@ -7,17 +7,17 @@ export function getQuizzes() {
 }
 
 /**
- * Uploads base64 image and returns result
- * @param {Base64} base64image
+ * Uploads image and returns result
+ * @param {Base64|URL} image
  * @return {Promise}
  */
-export function uploadImage(base64image) {
+export function uploadImage(image) {
   return axios({
     method: 'post',
     url: imageUploadURL,
     data: {
       upload_preset: 'klerkimage',
-      file: base64image,
+      file: image,
     },
   });
 }

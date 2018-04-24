@@ -17,5 +17,9 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+  @import 'scss/core.scss';
 
+  .quiz-creator {
+    @extend %container;
+  }
 </style>

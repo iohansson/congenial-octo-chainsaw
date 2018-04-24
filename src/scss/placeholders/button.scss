@@ -1,0 +1,23 @@
+%action {
+  text-decoration: underline;
+  cursor: pointer;
+  color: $textLightColor;
+  margin-right: $unit;
+
+  &:hover {
+    color: $textColor;
+  }
+}
+
+%button {
+  padding: $unit;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: $greenMedium;
+  border: none;
+  margin-right: $unit;
+
+  &:hover {
+    background-color: $green;
+  }
+}

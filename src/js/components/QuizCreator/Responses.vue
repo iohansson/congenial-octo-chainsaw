@@ -4,28 +4,37 @@
     ol.responses__list
       li.response(v-for="(item, index) in items" :key="index")
         .response__view(v-if="editResponseIndex !== index")
-          .response__text(@click="processEditResponse(item, index)") {{ item.text }}
+          .response__text(@click="processEditResponse(item, index)" :class="{'response__text--correct': item.correct}") {{ item.text }}
           .response__delete(@click="processDeleteResponse(index)") удалить
         .response__edit(v-if="editResponseIndex === index")
-          input.response__text(type="text", v-model="editResponseCopy.text")
-          label(for="correct") правильный
-          input.response__correct(type="checkbox", name="correct", v-model="editResponseCopy.correct")
-          input.response__hint--correct(
-            v-if="editResponseCopy.correct",
-            placeholder="примечание к правильному ответу",
-            v-model="editResponseCopy.hint.correct")
-          input.response__hint--error(
-            v-if="!editResponseCopy.correct",
-            placeholder="примечание к неправильному ответу",
-            v-model="editResponseCopy.hint.error")
-          input.response__hint--missng(
-            v-if="editResponseCopy.correct && multipleRightAnswers",
-            placeholder="если не выбрали",
-            v-model="editResponseCopy.hint.missing")
+          .response__textarea
+            label(for="text") Текст
+            textarea.response__text(id="text", type="text", v-model="editResponseCopy.text")
+          .response__input
+            input.response__correct(type="checkbox", id="correct", v-model="editResponseCopy.correct")
+            label(for="correct") правильный
+          .response__textarea(v-if="editResponseCopy.correct")
+            label(for="hintCorrect") Подсказка (если выбрали)
+            textarea.response__hint--correct(
+              id="hintCorrect",
+              placeholder="примечание к правильному ответу",
+              v-model="editResponseCopy.hint.correct")
+          .response__textarea(v-if="!editResponseCopy.correct")
+            label(for="hintError") Подсказка (если выбрали)
+            textarea.response__hint--error(
+              id="hintError",
+              placeholder="примечание к неправильному ответу",
+              v-model="editResponseCopy.hint.error")
+          .response__textarea(v-if="editResponseCopy.correct && multipleRightAnswers")
+            label(for="hintMissing") Подсказка (если не выбрали)
+            textarea.response__hint--missing(
+              id="hintMissing",
+              placeholder="если не выбрали",
+              v-model="editResponseCopy.hint.missing")
           .response__controls
-            .response__button(@click="processCloseResponse") закрыть и сохранить ответ
+            button.response__button(@click="processCloseResponse") закрыть и сохранить ответ
     .responses__controls
-      .responses__button(@click="processCreateResponse") добавить ответ
+      button.responses__button(@click="processCreateResponse") добавить ответ
 </template>
 <script>
 import {mapActions, mapGetters} from 'vuex';
@@ -91,16 +100,59 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+  @import 'scss/core.scss';
+
   .responses {
     margin: 18px 0;
+
+    @at-root {
+      #{&}__list {
+        @extend %list;
+      }
+
+      #{&}__button {
+        @extend %button;
+      }
+    }
   }
 
   .response {
     @at-root {
       #{&}__view {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
+        @extend %item;
+        cursor: pointer;
+      }
+
+      #{&}__text {
+        margin-right: $unit;
+
+        &--correct {
+          color: $green;
+        }
+      }
+
+      #{&}__delete {
+        @extend %action;
+      }
+
+      #{&}__edit {
+        margin: $unit 0;
+      }
+
+      #{&}__textarea {
+        @extend %textareaRow;
+      }
+
+      #{&}__input {
+        @extend %inputRow;
+      }
+
+      #{&}__correct {
+        margin-right: $unit/2;
+      }
+
+      #{&}__button {
+        @extend %button;
       }
     }
   }

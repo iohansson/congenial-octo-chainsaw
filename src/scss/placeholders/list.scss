@@ -1,0 +1,15 @@
+%list {
+  list-style-type: none;
+  margin: 0 0 $unit;
+  padding: 0;
+}
+
+%orderedList {
+  list-style-type: decimal;
+  padding-left: $unit;
+}
+
+%item {
+  display: flex;
+  align-items: center;
+}

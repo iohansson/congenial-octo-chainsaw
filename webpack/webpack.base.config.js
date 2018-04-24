@@ -30,7 +30,7 @@ module.exports = {
   devtool: isProduction() ? false : 'source-map',
 
   resolve: {
-    extensions: ['.js', '.vue'],
+    extensions: ['.js', '.vue', '.scss', '.css'],
     modules: [
       resolve('src'),
       resolve('src/js/components'),
@@ -71,6 +71,18 @@ module.exports = {
       {
         test: /\.pug$/,
         use: ['pug-loader'],
+      },
+      {
+        test: /\.scss$/,
+        use: [
+          {
+            loader: 'style-loader',
+          }, {
+            loader: 'css-loader',
+          }, {
+            loader: 'sass-loader',
+          },
+        ],
       },
     ],
   },

@@ -1,0 +1,39 @@
+%input {
+  border: none;
+  border-bottom: 1px solid $textLightColor;
+  width: 100%;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+%inputRow {
+  display: flex;
+  align-items: center;
+  margin-bottom: $unit;
+
+  label {
+    margin-right: $unit/2;
+  }
+}
+
+%textarea {
+  line-height: $lineHeight;
+  min-height: 4*$lineHeightPx;
+}
+
+%textareaRow {
+  margin-bottom: $unit;
+
+  label {
+    display: block;
+    margin-bottom: $unit/2;
+  }
+
+  textarea {
+    display: block;
+    width: 100%;
+    max-width: 600px;
+  }
+}

@@ -1,14 +1,26 @@
 <template lang="pug">
   .result-edit
-    input.result__entry(type="text", v-model="result.entry")
-    input.result__title(type="text", v-model="result.title")
-    input.result__text(type="text", v-model="result.text")
+    h2.result__caption {{ result.title }}
+    .result__input
+      label(for="entry") Минимум
+      input.result__entry(id="entry", type="text", v-model="result.entry")
+    .result__input
+      label(for="title") Название
+      input.result__title(id="title", type="text", v-model="result.title")
+    .result__input
+      label(for="text") Текст
+      input.result__text(id="text", type="text", v-model="result.text")
     image-input(@uploaded="processImageUploaded" :value="result.image")
-    input.result__title(type="text", v-model="result.shareTitle")
-    input.result__text(type="text", v-model="result.shareText")
+    h3.result__subcaption Для шары
+    .result__input
+      label(for="shareTitle") Заголовок
+      input.result__title(id="shareTitle", type="text", v-model="result.shareTitle")
+    .result__input
+      label(for="shareText") Текст
+      input.result__text(id="shareText", type="text", v-model="result.shareText")
     image-input(@uploaded="processShareImageUploaded" :value="result.shareImage")
     .result__controls
-      .result__button(@click="processClose") закрыть и сохранить результат
+      button.result__button(@click="processClose") закрыть и сохранить результат
 </template>
 <script>
 import {mapActions, mapGetters} from 'vuex';
@@ -27,6 +39,9 @@ export default {
       this.quizzes[this.$route.params.quizIndex]
         .results[this.$route.params.resultIndex]
     );
+  },
+  beforeDestroy() {
+    this.processSave();
   },
   methods: {
     ...mapActions(['updateResult']),
@@ -61,4 +76,25 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+  @import 'scss/core.scss';
+
+  .result-edit {
+    @extend %container;
+  }
+
+  .result {
+    @at-root {
+      #{&}__input {
+        @extend %inputRow;
+      }
+
+      #{&}__button {
+        @extend %button;
+      }
+
+      #{&}__controls {
+        @extend %footer;
+      }
+    }
+  }
 </style>

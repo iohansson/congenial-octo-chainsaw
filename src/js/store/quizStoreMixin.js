@@ -79,13 +79,14 @@ export default {
         .splice(payload.responseIndex, 1);
     },
     createResult(state, payload) {
-      const numberOfResults = state.quizzes[payload.quizIndex].results.push({
+      const quiz = state.quizzes[payload.quizIndex];
+      const numberOfResults = quiz.results.push({
         id: uuid(),
         entry: 0,
-        title: 'Новый результат',
-        shareTitle: '',
+        title: 'Вафля',
+        shareTitle: quiz.title,
         text: 'Описание результата',
-        shareText: '',
+        shareText: quiz.description,
         image: '',
         shareImage: '',
       });

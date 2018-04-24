@@ -13,3 +13,5 @@ new Vue({
     QuizCreator,
   },
 });
+
+import 'scss/main.scss';

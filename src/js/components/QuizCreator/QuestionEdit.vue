@@ -1,13 +1,16 @@
 <template lang="pug">
   .question-edit
-    input.question__text(type="text", v-model="question.text")
+    h2.question__caption {{ question.text }}
+    .question__input
+      label(for="text") Вопрос
+      input.question__text(id="text" v-model="question.text" type="text")
     image-input(@uploaded="processImageUploaded" :value="question.image")
     responses(
       v-if="question.responses"
       :items="question.responses"
       question-index="$route.params.questionIndex")
     .question__controls
-      .question__button(@click="processClose") закрыть и сохранить вопрос
+      button.question__button(@click="processClose") закрыть и сохранить вопрос
 </template>
 <script>
 import {mapActions, mapGetters} from 'vuex';
@@ -27,6 +30,9 @@ export default {
       this.quizzes[this.$route.params.quizIndex]
         .questions[this.$route.params.questionIndex]
     );
+  },
+  beforeDestroy() {
+    this.processSave();
   },
   methods: {
     ...mapActions(['updateQuestion', 'createQuestion']),
@@ -59,4 +65,25 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+  @import 'scss/core.scss';
+
+  .question-edit {
+    @extend %container;
+  }
+
+  .question {
+    @at-root {
+      #{&}__input {
+        @extend %inputRow;
+      }
+
+      #{&}__button {
+        @extend %button;
+      }
+
+      #{&}__text {
+        @extend %input;
+      }
+    }
+  }
 </style>

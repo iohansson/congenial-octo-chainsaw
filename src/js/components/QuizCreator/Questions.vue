@@ -8,7 +8,7 @@
             :to="{ name: 'question', params: { quizIndex: $route.params.quizIndex, questionIndex: index } }") {{ item.text }}
           .question__delete(@click="processDeleteQuestion(index)") удалить
     .questions__controls
-      .questions__button(@click="processCreateQuestion") добавить вопрос
+      button.questions__button(@click="processCreateQuestion") добавить вопрос
 </template>
 <script>
 import {mapActions} from 'vuex';
@@ -40,8 +40,10 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+  @import 'scss/core.scss';
+
   .questions {
-    margin: 18px 0;
+    margin: $unit 0;
 
     @at-root {
       #{&}__caption {
@@ -49,7 +51,12 @@ export default {
       }
 
       #{&}__list {
-        margin-bottom: 12px;
+        @extend %list;
+        @extend %orderedList;
+      }
+
+      #{&}__button {
+        @extend %button;
       }
     }
   }
@@ -63,9 +70,15 @@ export default {
 
     @at-root {
       #{&}__view {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
+        @extend %item;
+      }
+
+      #{&}__text {
+        margin-right: $unit;
+      }
+
+      #{&}__delete {
+        @extend %action;
       }
     }
   }

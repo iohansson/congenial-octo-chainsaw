@@ -1,0 +1,13 @@
+@import 'core';
+
+@import "~normalize-scss/sass/normalize";
+@include normalize();
+
+body {
+  font-family: 'Roboto', sans-serif;
+  color: $textColor;
+  font-size: $fontSize;
+  line-height: $lineHeight;
+}
+
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700&subset=cyrillic');

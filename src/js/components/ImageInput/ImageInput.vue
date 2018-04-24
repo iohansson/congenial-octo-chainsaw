@@ -6,10 +6,16 @@
       @drop.prevent="processDrop"
       @dragover.prevent=""
     )
+      span.image-input__target-text(v-if="!busy") перетащите картинку сюда
+      spinner(v-else)
+    .image-input__input(v-if="!value && !busy")
+      label(for="url") или вставьте URL картинки
+      input.image-input__url(id="url" @input="processUrlInput")
     img.image-input__preview(v-if="value" :src="value")
 </template>
 <script>
 import { uploadImage } from 'api/methods';
+import Spinner from 'Spinner/Spinner.vue';
 
 export default {
   name: 'ImageInput',
@@ -37,9 +43,12 @@ export default {
         reader.readAsDataURL(files[i]);
       }
     },
-    uploadImage(base64image) {
+    processUrlInput(event) {
+      this.uploadImage(event.target.value);
+    },
+    uploadImage(image) {
       this.busy = true;
-      uploadImage(base64image)
+      uploadImage(image)
         .then((result) => {
           this.busy = false;
           this.$emit('uploaded', result.data);
@@ -49,16 +58,31 @@ export default {
           console.log(e);
         });
     }
-  }
+  },
+  components: {
+    Spinner,
+  },
 }
 </script>
 <style lang="scss" scoped>
+  @import 'scss/core.scss';
+
   .image-input {
     @at-root {
       #{&}__target {
-        width: 300px;
-        height: 300px;
-        background-color: steelblue;
+        width: 100%;
+        min-height: 300px;
+        background-color: $greenMedium;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: $unit;
+      }
+
+      #{&}__input {
+        label {
+          margin-right: $unit/2;
+        }
       }
 
       #{&}__preview {
