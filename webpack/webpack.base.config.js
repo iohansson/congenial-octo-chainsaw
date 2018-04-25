@@ -2,17 +2,15 @@
 const path = require('path');
 const webpack = require('webpack');
 const ProgressPlugin = require('webpack/lib/ProgressPlugin');
+const plugins = require('./webpack.plugins');
+const utils = require('./utils');
 
 function resolve(dir) {
   return path.join(__dirname, '..', dir);
 }
 
-function isProduction() {
-  return process.env.NODE_ENV === 'production';
-}
-
 module.exports = {
-  entry: isProduction() ? {
+  entry: utils.isProduction() ? {
     main: './src/index.js',
   } : [
     'webpack-dev-server/client?http://localhost:9090',
@@ -22,12 +20,16 @@ module.exports = {
 
   output: {
     path: path.resolve(__dirname, '../build/'),
-    filename: isProduction() ? 'js/[name].[chunkhash].js' : 'js/[name].[hash].js',
+    filename: utils.isProduction() ? 'js/[name].[chunkhash].js' : 'js/[name].[hash].js',
     chunkFilename: 'js/[name].[chunkhash].js',
     publicPath: './',
   },
 
-  devtool: isProduction() ? false : 'source-map',
+  devtool: utils.isProduction() ? false : 'source-map',
+
+  performance: {
+    hints: utils.isProduction() ? 'warning' : false
+  },
 
   resolve: {
     extensions: ['.js', '.vue', '.scss', '.css'],
@@ -74,15 +76,7 @@ module.exports = {
       },
       {
         test: /\.scss$/,
-        use: [
-          {
-            loader: 'style-loader',
-          }, {
-            loader: 'css-loader',
-          }, {
-            loader: 'sass-loader',
-          },
-        ],
+        use: utils.sassLoaders(plugins.extractMain),
       },
     ],
   },
