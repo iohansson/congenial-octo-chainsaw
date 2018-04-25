@@ -2,8 +2,8 @@
   .question-edit
     h2.question__caption {{ question.text }}
     .question__input
-      label(for="text") Вопрос
-      input.question__text(id="text" v-model="question.text" type="text")
+      label(for="title") Вопрос
+      input.question__title(id="title" v-model="question.title" type="text")
     image-input(@uploaded="processImageUploaded" :value="question.image")
     responses(
       v-if="question.responses"
@@ -81,7 +81,7 @@ export default {
         @extend %button;
       }
 
-      #{&}__text {
+      #{&}__title {
         @extend %input;
       }
     }

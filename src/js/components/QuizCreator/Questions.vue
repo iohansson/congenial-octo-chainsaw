@@ -4,8 +4,8 @@
     ol.questions__list
       li.question(v-for="(item, index) in items" :key="index")
         .question__view
-          router-link.question__text(
-            :to="{ name: 'question', params: { quizIndex: $route.params.quizIndex, questionIndex: index } }") {{ item.text }}
+          router-link.question__title(
+            :to="{ name: 'question', params: { quizIndex: $route.params.quizIndex, questionIndex: index } }") {{ item.title }}
           .question__delete(@click="processDeleteQuestion(index)") удалить
     .questions__controls
       button.questions__button(@click="processCreateQuestion") добавить вопрос
@@ -73,7 +73,7 @@ export default {
         @extend %item;
       }
 
-      #{&}__text {
+      #{&}__title {
         margin-right: $unit;
       }
 

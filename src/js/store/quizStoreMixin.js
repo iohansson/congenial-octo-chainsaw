@@ -36,7 +36,8 @@ export default {
     createQuestion(state, payload) {
       const numberOfQuestions = state.quizzes[payload.quizIndex].questions.push({
         id: uuid(),
-        text: 'Новый вопрос',
+        title: 'Новый вопрос',
+        text: '',
         image: '',
         responses: [],
       });
