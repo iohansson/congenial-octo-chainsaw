@@ -3,7 +3,7 @@
     h2.question__caption {{ question.text }}
     .question__input
       label(for="title") Вопрос
-      input.question__title(id="title" v-model="question.title" type="text")
+      quill-editor.question__title(id="title" v-model="question.title")
     image-input(@uploaded="processImageUploaded" :value="question.image")
     responses(
       v-if="question.responses"
@@ -74,15 +74,11 @@ export default {
   .question {
     @at-root {
       #{&}__input {
-        @extend %inputRow;
+        @extend %textareaRow;
       }
 
       #{&}__button {
         @extend %button;
-      }
-
-      #{&}__title {
-        @extend %input;
       }
     }
   }

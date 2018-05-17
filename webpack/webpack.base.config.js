@@ -78,6 +78,10 @@ module.exports = {
         test: /\.scss$/,
         use: utils.sassLoaders(plugins.extractMain),
       },
+      {
+        test: /\.css$/,
+        use: utils.cssLoaders(plugins.extractMain),
+      },
     ],
   },
   plugins: [
